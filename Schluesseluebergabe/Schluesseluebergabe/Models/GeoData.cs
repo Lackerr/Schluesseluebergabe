@@ -8,17 +8,10 @@ namespace Schluesseluebergabe.Models
 {
     public class GeoData
     {
-        public string City { get => _city; }
-        public DateTime Date { get => _date; }
+        public string? City { get; set; }
+        public DateTime Date { get; set; }
 
-        private readonly string _city = string.Empty;
-        private readonly DateTime _date;
 
-        public GeoData(string city)
-        {
-            _city = city;
-            _date = DateTime.Now;
-        }
 
     }
 }

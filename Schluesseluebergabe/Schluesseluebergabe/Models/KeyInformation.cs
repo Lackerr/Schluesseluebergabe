@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Schluesseluebergabe.Models
 {
-    public class Recipient
+    public class KeyInformation
     {
-        public string? Name { get; set;}
-        public string? ForeName { get; set; }
-        public string? Id { get; set; }
-
+        public string Id { get; set; }
     }
 }
