@@ -1,5 +1,9 @@
-﻿using Schluesseluebergabe.ViewModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Schluesseluebergabe.Services;
+using Schluesseluebergabe.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,11 +13,11 @@ using System.Windows;
 
 namespace Schluesseluebergabe
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public static IHost? AppHost { get; private set; }
+
+
         protected override void OnStartup(StartupEventArgs e)
         {
             MainWindow = new MainWindow()
@@ -23,6 +27,11 @@ namespace Schluesseluebergabe
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
         }
     }
 }

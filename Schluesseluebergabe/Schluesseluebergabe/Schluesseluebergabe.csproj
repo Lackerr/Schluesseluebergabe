@@ -2,9 +2,69 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	 <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+	 <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;SYSLIB0011</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;SYSLIB0011</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="licenses.licx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="licenses.licx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.17.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TXBarcode">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXBarcode.dll</HintPath>
+    </Reference>
+    <Reference Include="TXBarcode.WPF">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXBarcode.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="TXDocumentServer">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXDocumentServer.dll</HintPath>
+    </Reference>
+    <Reference Include="TXDocumentServer.WPF">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXDocumentServer.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="TXDrawing">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXDrawing.dll</HintPath>
+    </Reference>
+    <Reference Include="TXDrawing.WPF">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXDrawing.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="TXImageProvider">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXImageProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="txpdf">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\txpdf.dll</HintPath>
+    </Reference>
+    <Reference Include="TXTextControl">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXTextControl.dll</HintPath>
+    </Reference>
+    <Reference Include="TXTextControl.Server">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXTextControl.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="TXTextControl.WPF">
+      <HintPath>..\..\..\..\..\TXTextControlNew\Assembly\TXTextControl.WPF.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

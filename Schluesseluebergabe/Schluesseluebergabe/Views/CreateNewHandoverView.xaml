@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Schluesseluebergabe.Views" xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CreateNewHandoverViewModel}"
+             xmlns:WPF="clr-namespace:TXTextControl.WPF;assembly=TXTextControl.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
-    <StackPanel>
+             d:DesignHeight="1657.83" d:DesignWidth="1017.582" Background="White">
+    <StackPanel >
         <Label Content="Neue Schüsselübergabe" FontSize="36" Foreground="#2097C8" Padding="10"/>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,38 +20,61 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Grid.Row="0" Content="Empfang durch:" Foreground="#2097C8" FontSize="24" Padding="10"/>
             <Label Grid.Column="1" Grid.Row="0" Content="Übergabe durch:" Foreground="#2097C8" FontSize="24" Padding="10"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="Details:" Foreground="#2097C8" FontSize="24" Padding="10"/>
 
             <StackPanel Grid.Column="0" Grid.Row="1">
-                <TextBox Text="{Binding RecipientName}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <TextBox Text="{Binding Recipient.Name}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
                 <Label Content="Name" FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2">
-                <TextBox Text="{Binding RecipientForeName}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <TextBox Text="{Binding Recipient.ForeName}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
                 <Label Content="Vorname" FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="3">
-                <TextBox Text="{Binding RecipientId}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <TextBox Text="{Binding Recipient.Id}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
                 <Label Content="Pers.-Nr." FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
 
 
             <StackPanel Grid.Column="1" Grid.Row="1">
-                <TextBox Text="{Binding SenderName}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <TextBox Text="{Binding Sender.Name}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
                 <Label Content="Name" FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="2">
-                <TextBox Text="{Binding SenderForename}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <TextBox Text="{Binding Sender.ForeName}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
                 <Label Content="Vorname" FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
-            <Button Grid.Column="0" Grid.Row="4" Content="Dokument erstellen" Foreground="White" Background="#2097C8" Margin="10,10,100,20" FontSize="20"  Cursor="Hand" IsEnabled="False" Command="{Binding SubmitCommand}"/>
+
+            <StackPanel Grid.Column="2" Grid.Row="1">
+                <TextBox Text="{Binding Geodata.City}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <Label Content="Ort" FontSize="16" Margin="10,0,10,10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="2">
+                <DatePicker Name="DatePicker" SelectedDate="{Binding Geodata.Date}" FontSize="20" BorderThickness="0,0,0,2" Margin="10,10,100,0"/>
+                <Label Content="Datum" FontSize="16" Margin="10,0,10,10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="3">
+                <TextBox Text="{Binding Key.Id}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0"/>
+                <Label Content="Schlüsselnummer" FontSize="16" Margin="10,0,10,10"/>
+            </StackPanel>
+            <Button Grid.Column="0" Grid.Row="4" Content="Dokument erstellen" Foreground="White" Background="#2097C8" Margin="10,10,100,20" FontSize="20"  Cursor="Hand" IsEnabled="True" Command="{Binding SubmitCommand}"/>
         </Grid>
+        <DockPanel>
+            <WPF:ButtonBar x:Name="buttonBar1"/>
+            <WPF:RulerBar x:Name="rulerBar1"/>
+            <WPF:StatusBar x:Name="statusBar1"/>
+            <WPF:RulerBar x:Name="rulerBar2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+            <WPF:TextControl x:Name="textControl1" ButtonBar="buttonBar1" RulerBar="rulerBar1" StatusBar="statusBar1" VerticalRulerBar="rulerBar2" Loaded="textControl1_Loaded"/>
+        </DockPanel>
     </StackPanel>
 </UserControl>

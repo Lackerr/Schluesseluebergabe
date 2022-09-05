@@ -11,64 +11,42 @@ namespace Schluesseluebergabe.ViewModels
 {
     public class CreateNewHandoverViewModel : ViewModelBase
     {
-        //private string _recipientName = string.Empty;
-        //private string _recipientForename = string.Empty;
-        //private string _recipientId = string.Empty;
+        private Sender _sender = new();
+        private Recipient _recipient = new();
+        private KeyInformation _key = new();
+        private GeoData _geoData = new();
 
-        //private string _senderName = string.Empty;
-        //private string _senderForename = string.Empty;
-
-        private Sender _sender = new Sender();
-        private Recipient _recipient = new Recipient();
-        private KeyInformation _key = new KeyInformation();
-        private GeoData _geoData = new GeoData();
-
-
-        public string RecipientName
+        public Sender Sender
         {
-            get => _recipient.Name;
+            get => _sender;
             set
             {
-                _recipient.Name = value;
-                OnPropertyChanged(nameof(RecipientName));
+                _sender = value;
+                OnPropertyChanged(nameof(Sender));
             }
         }
-        public string RecipientForeName
-        {
-            get { return _recipientForename; }
+        public Recipient Recipient { 
+            get => _recipient;
             set
             {
-                _recipientForename = value;
-                OnPropertyChanged(nameof(RecipientForeName));
+                _recipient = value;
+                OnPropertyChanged(nameof(Recipient));
             }
         }
-        public string RecipientId
-        {
-            get { return _recipientId; }
+        public KeyInformation Key { 
+            get => _key; 
             set
             {
-                _recipientId = value;
-                OnPropertyChanged(nameof(RecipientId));
+                _key = value;
+                OnPropertyChanged(nameof(Key));
             }
         }
-
-        public string SenderName
-        {
-            get { return _senderName; }
+        public GeoData Geodata { 
+            get => _geoData; 
             set
             {
-                _sender.Name = value;
-                _senderName = value;
-                OnPropertyChanged(nameof(SenderName));
-            }
-        }
-        public string SenderForename
-        {
-            get { return _senderForename; }
-            set
-            {
-                _senderForename = value;
-                OnPropertyChanged(nameof(SenderForename));
+                _geoData = value;
+                OnPropertyChanged(nameof(Geodata));
             }
         }
 

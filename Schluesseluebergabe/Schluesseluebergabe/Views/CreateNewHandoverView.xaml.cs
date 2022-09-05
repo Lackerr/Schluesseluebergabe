@@ -22,7 +22,12 @@ namespace Schluesseluebergabe.Views
     {
         public CreateNewHandoverView()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+        }
+
+        private void textControl1_Loaded(object sender, RoutedEventArgs e)
+        {
+            textControl1.Focus();
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Schluesseluebergabe.Models;
+using Schluesseluebergabe.Services;
 using Schluesseluebergabe.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Schluesseluebergabe.Commands
 {
@@ -19,26 +21,14 @@ namespace Schluesseluebergabe.Commands
         private KeyInformation _key;
         private GeoData _geoData;
 
+        private IPrinter _printer;
+
 
         public SubmitPrintCommand(CreateNewHandoverViewModel createNewHandoverViewModel)
         {
             _viewModel = createNewHandoverViewModel;
-
             InitPrintData();
-
-
-
-
-            _recipient = new Recipient(
-                _viewModel.RecipientName,
-                _viewModel.RecipientForeName,
-                _viewModel.RecipientId
-                );
-            _sender = new Sender(
-                _viewModel.SenderName,
-                _viewModel.SenderName
-                );
-
+            _printer = new TxPrinter();
         }
 
         public override void Execute(object? parameter)
@@ -49,23 +39,11 @@ namespace Schluesseluebergabe.Commands
         private void InitPrintData()
         {
             _printData = new PrintData(
-                new Recipient
-                {
-                    Name = _viewModel.RecipientName,
-                    ForeName = _viewModel.RecipientForeName,
-                    Id = _viewModel.RecipientId
-                },
-                new Sender
-                {
-                    Name = _viewModel.SenderName,
-                    ForeName = _viewModel.SenderForename
-                },
-                new Key
-                {
-                    Id = _viewModel.ke
-                }
+                _viewModel.Recipient,
+                _viewModel.Sender,
+                _viewModel.Key,
+                _viewModel.Geodata
                 );
         }
-
     }
 }

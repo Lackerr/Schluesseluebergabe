@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Schluesseluebergabe": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}
