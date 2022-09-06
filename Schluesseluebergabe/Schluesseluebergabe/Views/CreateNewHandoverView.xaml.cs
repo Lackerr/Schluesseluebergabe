@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TXTextControl.DocumentServer;
+using TXTextControl;
+using System.IO;
 
 namespace Schluesseluebergabe.Views
 {
@@ -22,12 +25,7 @@ namespace Schluesseluebergabe.Views
     {
         public CreateNewHandoverView()
         {
-            InitializeComponent(); 
-        }
-
-        private void textControl1_Loaded(object sender, RoutedEventArgs e)
-        {
-            textControl1.Focus();
+            InitializeComponent();
         }
     }
 }

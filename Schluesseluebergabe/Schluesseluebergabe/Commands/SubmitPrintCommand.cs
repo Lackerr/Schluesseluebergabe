@@ -12,38 +12,34 @@ namespace Schluesseluebergabe.Commands
 {
     public class SubmitPrintCommand : CommandBase
     {
-        private CreateNewHandoverViewModel _viewModel;
-
-        private PrintData _printData;
-
-        private Sender _sender;
-        private Recipient _recipient;
-        private KeyInformation _key;
-        private GeoData _geoData;
-
-        private IPrinter _printer;
+        private readonly CreateNewHandoverViewModel _viewModel;
+        private readonly PrintData _printData;
+        private readonly IPrinter _printer;
 
 
         public SubmitPrintCommand(CreateNewHandoverViewModel createNewHandoverViewModel)
         {
             _viewModel = createNewHandoverViewModel;
-            InitPrintData();
+            _printData = InitPrintData();
+
+            //DI
             _printer = new TxPrinter();
         }
 
         public override void Execute(object? parameter)
         {
-            throw new NotImplementedException();
+            _printer.PrintDocument(_printData);
         }
 
-        private void InitPrintData()
+        private PrintData InitPrintData()
         {
-            _printData = new PrintData(
+            var printData = new PrintData(
                 _viewModel.Recipient,
                 _viewModel.Sender,
                 _viewModel.Key,
                 _viewModel.Geodata
                 );
+            return printData;
         }
     }
 }

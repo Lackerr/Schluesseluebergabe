@@ -9,6 +9,6 @@ namespace Schluesseluebergabe.Services
 {
     public interface IPrinter
     {
-        public Task PrintDocument(PrintData data);
+        public void PrintDocument(PrintData data);
     }
 }

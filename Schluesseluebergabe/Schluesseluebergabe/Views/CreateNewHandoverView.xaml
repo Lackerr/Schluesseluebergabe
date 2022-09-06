@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Schluesseluebergabe.Views" xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CreateNewHandoverViewModel}"
              xmlns:WPF="clr-namespace:TXTextControl.WPF;assembly=TXTextControl.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="1657.83" d:DesignWidth="1017.582" Background="White">
+             Background="White">
     <StackPanel >
         <Label Content="Neue Schüsselübergabe" FontSize="36" Foreground="#2097C8" Padding="10"/>
         <Grid>
@@ -69,12 +69,30 @@
             </StackPanel>
             <Button Grid.Column="0" Grid.Row="4" Content="Dokument erstellen" Foreground="White" Background="#2097C8" Margin="10,10,100,20" FontSize="20"  Cursor="Hand" IsEnabled="True" Command="{Binding SubmitCommand}"/>
         </Grid>
-        <DockPanel>
+        <!--<DockPanel>
+            <Menu Name="menu1" DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="Load..." Click="MenuItemLoad_Click"/>
+                    <MenuItem Header="Save..." Click="MenuItemSave_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Exit" Click="MenuItemExit_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="Cut" Click="MenuItemCut_Click"/>
+                    <MenuItem Header="Copy" Click="MenuItemCopy_Click"/>
+                    <MenuItem Header="Paste" Click="MenuItemPaste_Click"/>
+                </MenuItem>
+                <MenuItem Header="_Format">
+                    <MenuItem Header="Character..." Click="MenuItemCharacter_Click"/>
+                    <MenuItem Header="Paragraph..." Click="MenuItemParagraph_Click"/>
+                </MenuItem>
+            </Menu>
             <WPF:ButtonBar x:Name="buttonBar1"/>
             <WPF:RulerBar x:Name="rulerBar1"/>
             <WPF:StatusBar x:Name="statusBar1"/>
             <WPF:RulerBar x:Name="rulerBar2" DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
-            <WPF:TextControl x:Name="textControl1" ButtonBar="buttonBar1" RulerBar="rulerBar1" StatusBar="statusBar1" VerticalRulerBar="rulerBar2" Loaded="textControl1_Loaded"/>
-        </DockPanel>
+            ButtonBar="buttonBar1" RulerBar="rulerBar1" StatusBar="statusBar1" VerticalRulerBar="rulerBar2"
+            <WPF:TextControl x:Name="textControl1" Loaded="textControl1_Loaded"/>
+        </DockPanel>-->
     </StackPanel>
 </UserControl>
