@@ -2,9 +2,12 @@
 using Schluesseluebergabe.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TXTextControl;
 using TXTextControl.DocumentServer;
 
@@ -12,7 +15,7 @@ namespace Schluesseluebergabe.Services
 {
     internal class TxPrinter : IPrinter
     {
-        public  void PrintDocument(PrintData data)
+        public void PrintDocument(PrintData data)
         {
 
             LoadSettings ls = new LoadSettings()
@@ -20,7 +23,7 @@ namespace Schluesseluebergabe.Services
                 ApplicationFieldFormat = ApplicationFieldFormat.MSWord
             };
 
-            string jsonData =  JsonConvert.SerializeObject(data);
+            string jsonData = JsonConvert.SerializeObject(data);
             using (ServerTextControl serverTextControl = new())
             {
                 serverTextControl.Create();
@@ -31,8 +34,38 @@ namespace Schluesseluebergabe.Services
                     mailMerge.TextComponent = serverTextControl;
                     mailMerge.MergeJsonData(jsonData);
                 }
-                serverTextControl.Save("results.pdf", StreamType.AdobePDF);
+
+
+                string fileName = Path.Combine(GetFilePath(), $"Schluesseluebergabe_{data.Recipient.ForeName}{data.Recipient.Name}.pdf");
+                serverTextControl.Save(fileName, StreamType.AdobePDF);
+
+
             }
+        }
+
+        private string GetFilePath()
+        {
+            string rootFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = ConfigurationManager.AppSettings.Get("PrintPath");
+
+            if (path != null && path != "")
+            {
+                rootFolder = path;
+            }
+
+
+            FolderBrowserDialog dialog = new()
+            {
+                SelectedPath = rootFolder
+            };
+
+            var result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                ConfigurationManager.AppSettings.Set("PrintPath", dialog.SelectedPath);
+                return dialog.SelectedPath;
+            }
+            throw new ArgumentNullException("Kein Ablagepfad angegeben.");
         }
     }
 }

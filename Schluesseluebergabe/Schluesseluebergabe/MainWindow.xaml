@@ -3,10 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Schluesseluebergabe" xmlns:views="clr-namespace:Schluesseluebergabe.Views"
+        xmlns:local="clr-namespace:Schluesseluebergabe" xmlns:views="clr-namespace:Schluesseluebergabe.Views" xmlns:viewModels="clr-namespace:Schluesseluebergabe.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <views:CreateNewHandoverView DataContext="{Binding CurrentViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewModels:HomepageViewModel}">
+                <views:HomepageView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CreateNewHandoverViewModel}">
+                <views:CreateNewHandoverView/>
+            </DataTemplate>
+        </Grid.Resources>
+        <StackPanel Grid.Row="0">
+            <Button Content="test" Click="Button_Click"/>
+        </StackPanel>
+        <ContentControl Content="{Binding CurrentViewModel}" Grid.Row="1"/>
+        <!--<views:HomepageView DataContext="{Binding CurrentViewModel}" Grid.Row="1" x:Name="uc1"/>-->
     </Grid>
 </Window>

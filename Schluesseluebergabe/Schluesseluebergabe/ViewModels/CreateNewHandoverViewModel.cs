@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Configuration;
 
 namespace Schluesseluebergabe.ViewModels
 {
@@ -50,11 +51,14 @@ namespace Schluesseluebergabe.ViewModels
             }
         }
 
+
+
         public ICommand SubmitCommand { get; }
 
         public CreateNewHandoverViewModel()
         {
-            SubmitCommand = new SubmitPrintCommand(this);
+            
+            SubmitCommand = new SubmitPrintCommand(new PrintData(_recipient,_sender,_key,_geoData));
         }
     }
 }

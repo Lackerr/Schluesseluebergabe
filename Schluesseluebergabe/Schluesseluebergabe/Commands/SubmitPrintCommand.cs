@@ -17,10 +17,9 @@ namespace Schluesseluebergabe.Commands
         private readonly IPrinter _printer;
 
 
-        public SubmitPrintCommand(CreateNewHandoverViewModel createNewHandoverViewModel)
+        public SubmitPrintCommand(PrintData printData)
         {
-            _viewModel = createNewHandoverViewModel;
-            _printData = InitPrintData();
+            _printData = printData;
 
             //DI
             _printer = new TxPrinter();
@@ -29,17 +28,6 @@ namespace Schluesseluebergabe.Commands
         public override void Execute(object? parameter)
         {
             _printer.PrintDocument(_printData);
-        }
-
-        private PrintData InitPrintData()
-        {
-            var printData = new PrintData(
-                _viewModel.Recipient,
-                _viewModel.Sender,
-                _viewModel.Key,
-                _viewModel.Geodata
-                );
-            return printData;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Schluesseluebergabe.Services;
+using Schluesseluebergabe.Stores;
 using Schluesseluebergabe.ViewModels;
 using System;
 using System.Collections;
@@ -15,14 +16,20 @@ namespace Schluesseluebergabe
 {
     public partial class App : Application
     {
-        public static IHost? AppHost { get; private set; }
+        private readonly NavigationStore _navigationStore;
 
+        public App()
+        {
+            _navigationStore = new NavigationStore();
+        }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            _navigationStore.CurrentViewModel = new HomepageViewModel(_navigationStore);
+
             MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel()
+                DataContext = new MainViewModel(_navigationStore)
             };
             MainWindow.Show();
 
