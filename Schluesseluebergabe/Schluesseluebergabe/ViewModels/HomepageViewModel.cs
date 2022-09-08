@@ -16,7 +16,7 @@ namespace Schluesseluebergabe.ViewModels
 
         public HomepageViewModel(NavigationStore navigationStore)
         {
-            NewHandoverCommand = new NavigateCommand(navigationStore);
+            NewHandoverCommand = new NavigateCommchrome://vivaldi-webui/startpageand(navigationStore);
         }
     }
 }
