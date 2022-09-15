@@ -18,6 +18,7 @@ namespace Schluesseluebergabe
     {
         private readonly NavigationStore _navigationStore;
 
+
         public App()
         {
             _navigationStore = new NavigationStore();
@@ -25,7 +26,7 @@ namespace Schluesseluebergabe
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = new HomepageViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = GetNewHomepageViewModel();
 
             MainWindow = new MainWindow()
             {
@@ -39,6 +40,22 @@ namespace Schluesseluebergabe
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+        }
+
+
+        private CreateNewHandoverViewModel GetNewHandoverViewModel()
+        {
+            return new CreateNewHandoverViewModel(new NavigationService(_navigationStore, GetNewHomepageViewModel));
+        }
+
+        private HomepageViewModel GetNewHomepageViewModel()
+        {
+            return new HomepageViewModel(new NavigationService(_navigationStore, GetNewHandoverViewModel), new NavigationService(_navigationStore, GetDisplayHandoversViewModel));
+        }
+
+        private DisplayHandoversViewModel GetDisplayHandoversViewModel()
+        {
+            return new DisplayHandoversViewModel(new NavigationService(_navigationStore, GetNewHomepageViewModel));
         }
     }
 }

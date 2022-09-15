@@ -15,7 +15,7 @@ namespace Schluesseluebergabe.Services
 {
     internal class TxPrinter : IPrinter
     {
-        public void PrintDocument(PrintData data)
+        public Task PrintDocumentAsync(PrintData data)
         {
 
             LoadSettings ls = new LoadSettings()
@@ -39,11 +39,13 @@ namespace Schluesseluebergabe.Services
                 string fileName = Path.Combine(GetFilePath(), $"Schluesseluebergabe_{data.Recipient.ForeName}{data.Recipient.Name}.pdf");
                 serverTextControl.Save(fileName, StreamType.AdobePDF);
 
-
+                IDataManager manager = new DataManagerCSV();
+                manager.SaveDataAsync(data);
             }
+            return Task.CompletedTask;
         }
 
-        private string GetFilePath()
+        private static string GetFilePath()
         {
             string rootFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = ConfigurationManager.AppSettings.Get("PrintPath");

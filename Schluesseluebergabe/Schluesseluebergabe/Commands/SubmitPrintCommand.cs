@@ -7,27 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Input;
 
 namespace Schluesseluebergabe.Commands
 {
     public class SubmitPrintCommand : CommandBase
     {
-        private readonly CreateNewHandoverViewModel _viewModel;
         private readonly PrintData _printData;
         private readonly IPrinter _printer;
+        private readonly CreateNewHandoverViewModel _viewModel;
 
 
-        public SubmitPrintCommand(PrintData printData)
+        public SubmitPrintCommand(CreateNewHandoverViewModel viewModel, PrintData printData)
         {
             _printData = printData;
-
+            _viewModel = viewModel;
             //DI
             _printer = new TxPrinter();
         }
 
-        public override void Execute(object? parameter)
+        public async override void Execute(object? parameter)
         {
-            _printer.PrintDocument(_printData);
+            _viewModel.Cursor = CursorType.Wait;
+           await _printer.PrintDocumentAsync(_printData);
+            _viewModel.Cursor = CursorType.Arrow;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Schluesseluebergabe.Commands;
+using Schluesseluebergabe.Services;
 using Schluesseluebergabe.Stores;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,16 @@ using System.Windows.Input;
 
 namespace Schluesseluebergabe.ViewModels
 {
-    internal class HomepageViewModel : ViewModelBase
+    public class HomepageViewModel : ViewModelBase
     {
 
         public ICommand NewHandoverCommand { get; }
+        public ICommand DisplayHandoversCommand { get; }
 
-        public HomepageViewModel(NavigationStore navigationStore)
+        public HomepageViewModel(NavigationService newHandoverViewNavigationService, NavigationService displayHandoversNavigationService)
         {
-            NewHandoverCommand = new NavigateCommchrome://vivaldi-webui/startpageand(navigationStore);
+            NewHandoverCommand = new NavigateCommand(newHandoverViewNavigationService);
+            DisplayHandoversCommand = new NavigateCommand(displayHandoversNavigationService);
         }
     }
 }

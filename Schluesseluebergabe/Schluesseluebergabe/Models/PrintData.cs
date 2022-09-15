@@ -22,5 +22,9 @@ namespace Schluesseluebergabe.Models
             Key = key;
             GeoData = geoData;
         }
+        public override string ToString()
+        {
+            return Recipient.Name + "," + Recipient.ForeName + "," + Recipient.Id + "," + Sender.Name + "," + Sender.ForeName + "," + Key.Id + "," + GeoData.City + "," + GeoData.Date;
+        }
     }
 }

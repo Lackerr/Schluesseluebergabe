@@ -1,4 +1,5 @@
-﻿using Schluesseluebergabe.Stores;
+﻿using Schluesseluebergabe.Services;
+using Schluesseluebergabe.Stores;
 using Schluesseluebergabe.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace Schluesseluebergabe.Commands
 {
-    internal class NavigateCommand : CommandBase
+    public class NavigateCommand : CommandBase
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly NavigationService _navigationService;
 
-        public NavigateCommand(NavigationStore navigationStore)
+        public NavigateCommand(NavigationService navigationService)
         {
-            _navigationStore = navigationStore;
+            _navigationService = navigationService;
         }
 
         public override void Execute(object? parameter)
         {
-            _navigationStore.CurrentViewModel = new CreateNewHandoverViewModel();
+            _navigationService.Navigate();
         }
     }
 }

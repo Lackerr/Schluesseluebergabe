@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Schluesseluebergabe.Services
 {
-    public interface IPrinter
+    public interface IDataManager
     {
-        public Task PrintDocumentAsync(PrintData data);
+        public Task<List<PrintData>> GetDataAsync();
+        public Task SaveDataAsync(PrintData data);
     }
 }

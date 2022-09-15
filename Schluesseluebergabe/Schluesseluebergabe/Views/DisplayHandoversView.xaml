@@ -3,10 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Schluesseluebergabe.Views"
              mc:Ignorable="d" 
+             xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:DisplayHandoversViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+
+        <DataGrid ItemsSource="{Binding PrintData}" AutoGenerateColumns="False" CanUserResizeColumns="True" IsReadOnly="True" FontSize="18">
+            <DataGrid.ContextMenu>
+                <ContextMenu/>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Empfänger - Name" Binding="{Binding Recipient.Name}"/>
+                <DataGridTextColumn Header="Empfänger - Vorame" Binding="{Binding Recipient.ForeName}"/>
+                <DataGridTextColumn Header="Empfänger - Pers.-Nr." Binding="{Binding Recipient.Id}"/>
+                <DataGridTextColumn Header="Sender - Name" Binding="{Binding Sender.Name}"/>
+                <DataGridTextColumn Header="Sender - Vame" Binding="{Binding Recipient.ForeName}"/>
+                <DataGridTextColumn Header="Schlüssel - Name" Binding="{Binding Key.Id}"/>
+                <DataGridTextColumn Header="Ort" Binding="{Binding GeoData.City}"/>
+                <DataGridTextColumn Header="Datum" Binding="{Binding GeoData.Date}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+
     </Grid>
 </UserControl>
