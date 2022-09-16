@@ -30,7 +30,6 @@ namespace Schluesseluebergabe.ViewModels
         public ICommand CancelCommand { get; }
 
 
-
         public DisplayHandoversViewModel(NavigationService navigationService)
         {
             CancelCommand = new NavigateCommand(navigationService);

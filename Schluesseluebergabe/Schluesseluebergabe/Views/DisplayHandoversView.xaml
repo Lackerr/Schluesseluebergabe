@@ -7,8 +7,11 @@
              xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" 
              d:DataContext="{d:DesignInstance Type=viewmodels:DisplayHandoversViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-
+    <Grid VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding PrintData}" AutoGenerateColumns="False" CanUserResizeColumns="True" IsReadOnly="True" FontSize="18">
             <DataGrid.ContextMenu>
                 <ContextMenu/>
@@ -24,7 +27,7 @@
                 <DataGridTextColumn Header="Datum" Binding="{Binding GeoData.Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+        <Button Grid.Row="1" Content="Abbrechen"  Foreground="White" Background="#2097C8" Margin="10,10,10,10" FontSize="20" Cursor="Hand" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
 
     </Grid>
 </UserControl>
