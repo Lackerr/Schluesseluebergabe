@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Schluesseluebergabe.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Schluesseluebergabe.Views"
+             xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Einstellungen" FontSize="36" Padding="10" Foreground="#2097C8"/>
+
+        <Label Grid.Row="1" Content="Speicherpfad" FontSize="20" Padding="10" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DictPath}" FontSize="20" Padding="10" BorderThickness="0,0,0,2" Margin="10,0,10,0" />
+
+        <Label Grid.Row="2" Content="Druckpfad" FontSize="20" Padding="10" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PrintPath}" FontSize="20" Padding="10" BorderThickness="0,0,0,2" Margin="10,0,10,0" />
+
+        <Label Grid.Row="3" Content="Standardwerte" FontSize="25" Padding="10" Foreground="#2097C8"/>
+        <Label Grid.Row="4" Content="Ort" FontSize="20" Padding="10" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding City}" FontSize="20" Padding="10" BorderThickness="0,0,0,2" Margin="10,0,10,0" />
+
+        <Grid Grid.Row="5" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Übergabe durch:" FontSize="20" Padding="10" />
+            <Label Grid.Column="1" Content="Name" FontSize="20" Padding="10" HorizontalAlignment="Right" Margin="0,0,30,0"/>
+            <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SenderName}" FontSize="20" Padding="10" BorderThickness="0,0,0,2" Margin="10,0,10,0" />
+
+            <Label Grid.Column="1" Grid.Row="2" Content="Vorname" FontSize="20" Padding="10" HorizontalAlignment="Right" Margin="0,0,30,0"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding SenderForeName}" FontSize="20" Padding="10" BorderThickness="0,0,0,2" Margin="10,0,10,0" />
+        </Grid>
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button  Content="Speichern"  Foreground="White" Background="#2097C8" Margin="10,10,10,10" FontSize="20" Cursor="Hand" Command="{Binding SubmitCommand}" HorizontalAlignment="Right"/>
+            <Button  Content="Abbrechen"  Foreground="White" Background="#2097C8" Margin="10,10,10,10" FontSize="20" Cursor="Hand" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

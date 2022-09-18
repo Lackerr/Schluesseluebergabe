@@ -2,9 +2,9 @@
 
 namespace Schluesseluebergabe.Views
 {
-    public partial class DisplayHandoversView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public DisplayHandoversView()
+        public SettingsView()
         {
             InitializeComponent();
         }

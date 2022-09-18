@@ -1,36 +1,59 @@
-﻿using Schluesseluebergabe.Models;
+﻿using PdfiumViewer;
+using Schluesseluebergabe.Models;
 using Schluesseluebergabe.Services;
-using Schluesseluebergabe.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using System.Windows.Input;
+using System.Windows.Forms;
 
 namespace Schluesseluebergabe.Commands
 {
     public class SubmitPrintCommand : CommandBase
     {
         private readonly PrintData _printData;
-        private readonly IPrinter _printer;
-        private readonly CreateNewHandoverViewModel _viewModel;
+        private readonly IPrinter _txPrinter;
 
 
-        public SubmitPrintCommand(CreateNewHandoverViewModel viewModel, PrintData printData)
+
+        public SubmitPrintCommand(PrintData printData)
         {
             _printData = printData;
-            _viewModel = viewModel;
+
+
             //DI
-            _printer = new TxPrinter();
+            _txPrinter = new TxPrinter();
         }
 
         public async override void Execute(object? parameter)
         {
-            _viewModel.Cursor = CursorType.Wait;
-           await _printer.PrintDocumentAsync(_printData);
-            _viewModel.Cursor = CursorType.Arrow;
+            try
+            {
+                string fileName = await _txPrinter.PrintDocumentAsync(_printData);
+
+
+                PrintDialog dialog = new();
+
+                using (var document = PdfDocument.Load(fileName))
+                {
+                    using var printDocument = document.CreatePrintDocument();
+                    dialog.Document = printDocument;
+                    var result = dialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        printDocument.Print();
+                    }
+                }
+
+
+
+                MessageBox.Show("Dokument erfolgreich erstellt", "Finished");
+            }
+            catch (ArgumentNullException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fehler beim erstellen des Dokumentes\n\n", "Fehler");
+            }
         }
     }
 }

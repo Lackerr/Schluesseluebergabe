@@ -11,7 +11,7 @@ namespace Schluesseluebergabe.ViewModels
         private Recipient _recipient = new();
         private KeyInformation _key = new();
         private GeoData _geoData = new();
-        private CursorType _cursor = CursorType.Wait;
+
 
         public Sender Sender
         {
@@ -47,25 +47,14 @@ namespace Schluesseluebergabe.ViewModels
             }
         }
 
-        public CursorType Cursor
-        {
-            get => _cursor;
-            set
-            {
-                _cursor = value;
-                OnPropertyChanged(nameof(Cursor));
-            }
-        }
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
         public CreateNewHandoverViewModel(NavigationService navigationService)
         {
-            Cursor = CursorType.Wait;
-            SubmitCommand = new SubmitPrintCommand(this,new PrintData(_recipient,_sender,_key,_geoData));
+            SubmitCommand = new SubmitPrintCommand(new PrintData(_recipient,_sender,_key,_geoData));
             CancelCommand = new NavigateCommand(navigationService);
-            Cursor = CursorType.Arrow;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Schluesseluebergabe.Views
     public partial class CreateNewHandoverView : UserControl
     {
 
-        private List<TextBox> _textBoxes;
+        private readonly List<TextBox> _textBoxes;
        
 
         public CreateNewHandoverView()

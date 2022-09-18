@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Schluesseluebergabe.Models;
+using Schluesseluebergabe.Stores;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TXTextControl;
@@ -15,10 +14,24 @@ namespace Schluesseluebergabe.Services
 {
     internal class TxPrinter : IPrinter
     {
-        public Task PrintDocumentAsync(PrintData data)
-        {
+        private readonly ConfigManager _cfgManager;
 
-            LoadSettings ls = new LoadSettings()
+        public TxPrinter()
+        {
+            _cfgManager = ConfigManager.Instance;
+        }
+
+        public Task<string> PrintDocumentAsync(PrintData data)
+        {
+            string fileName;
+
+            if (data == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+
+            LoadSettings ls = new()
             {
                 ApplicationFieldFormat = ApplicationFieldFormat.MSWord
             };
@@ -29,26 +42,30 @@ namespace Schluesseluebergabe.Services
                 serverTextControl.Create();
                 serverTextControl.Load("Schluesseluebergabe.docx", StreamType.WordprocessingML, ls);
 
-                using (MailMerge mailMerge = new MailMerge())
+                using (MailMerge mailMerge = new())
                 {
                     mailMerge.TextComponent = serverTextControl;
                     mailMerge.MergeJsonData(jsonData);
                 }
 
 
-                string fileName = Path.Combine(GetFilePath(), $"Schluesseluebergabe_{data.Recipient.ForeName}{data.Recipient.Name}.pdf");
+                 fileName = Path.Combine(GetFilePath(), $"Schluesseluebergabe_{data.Recipient.ForeName}{data.Recipient.Name}.pdf");
                 serverTextControl.Save(fileName, StreamType.AdobePDF);
 
                 IDataManager manager = new DataManagerCSV();
-                manager.SaveDataAsync(data);
+                manager.SaveDataAsync(new List<PrintData>() { data }, false);
+
+
+
             }
-            return Task.CompletedTask;
+            return Task.FromResult(fileName);
         }
 
-        private static string GetFilePath()
+        private string GetFilePath()
         {
+            var cfg = _cfgManager.GetConfig();
             string rootFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string path = ConfigurationManager.AppSettings.Get("PrintPath");
+            string path = cfg.PrintPath;
 
             if (path != null && path != "")
             {
@@ -65,9 +82,13 @@ namespace Schluesseluebergabe.Services
             if (result == DialogResult.OK)
             {
                 ConfigurationManager.AppSettings.Set("PrintPath", dialog.SelectedPath);
+
+                cfg.PrintPath = dialog.SelectedPath;
+                _cfgManager.SaveConfig(cfg);
+
                 return dialog.SelectedPath;
             }
-            throw new ArgumentNullException("Kein Ablagepfad angegeben.");
+            throw new ArgumentNullException(path, "Kein Ablagepfad angegeben.");
         }
     }
 }

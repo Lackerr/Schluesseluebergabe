@@ -1,15 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Schluesseluebergabe.Services;
+﻿using Schluesseluebergabe.Services;
 using Schluesseluebergabe.Stores;
 using Schluesseluebergabe.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Schluesseluebergabe
@@ -50,12 +41,17 @@ namespace Schluesseluebergabe
 
         private HomepageViewModel GetNewHomepageViewModel()
         {
-            return new HomepageViewModel(new NavigationService(_navigationStore, GetNewHandoverViewModel), new NavigationService(_navigationStore, GetDisplayHandoversViewModel));
+            return new HomepageViewModel(new NavigationService(_navigationStore, GetNewHandoverViewModel), new NavigationService(_navigationStore, GetDisplayHandoversViewModel), new NavigationService(_navigationStore, GetNewSettingsViewModel));
         }
 
         private DisplayHandoversViewModel GetDisplayHandoversViewModel()
         {
             return new DisplayHandoversViewModel(new NavigationService(_navigationStore, GetNewHomepageViewModel));
+        }
+
+        private SettingsViewModel GetNewSettingsViewModel()
+        {
+            return new SettingsViewModel(new NavigationService(_navigationStore, GetNewHomepageViewModel));
         }
     }
 }

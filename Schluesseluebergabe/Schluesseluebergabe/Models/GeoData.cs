@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Schluesseluebergabe.Stores;
+using System;
 
 namespace Schluesseluebergabe.Models
 {
@@ -11,12 +7,15 @@ namespace Schluesseluebergabe.Models
     {
         public string? City { get; set; }
         public DateTime Date { get; set; }
+        private readonly ConfigManager _cfgManager;
 
         public GeoData()
         {
-            Date = DateTime.Now;
+            _cfgManager = ConfigManager.Instance;
 
-            City = ConfigurationManager.AppSettings.Get("GeoData_City");
+
+            Date = DateTime.Now.Date;
+            City = _cfgManager.GetConfig().City;
         }
     }
 }

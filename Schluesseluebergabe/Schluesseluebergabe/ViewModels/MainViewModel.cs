@@ -1,10 +1,4 @@
 ﻿using Schluesseluebergabe.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Schluesseluebergabe.ViewModels
 {
@@ -24,8 +18,6 @@ namespace Schluesseluebergabe.ViewModels
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
-
-
-       
+  
     }
 }

@@ -1,14 +1,11 @@
 ﻿using Schluesseluebergabe.Models;
+using Schluesseluebergabe.Stores;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using CSVLibraryAK;
-using System.Data;
 
 namespace Schluesseluebergabe.Services
 {
@@ -19,38 +16,61 @@ namespace Schluesseluebergabe.Services
         private readonly string _csvFileName;
         private readonly string _filePath;
 
+        private readonly ConfigManager _cfgManager;
+
         public DataManagerCSV()
         {
+            _cfgManager = ConfigManager.Instance;
+
             _printData = new List<PrintData>();
             _dataTable = new DataTable();
 
-            _filePath = ConfigurationManager.AppSettings.Get("DataDirectory");
+            _filePath = _cfgManager.GetConfig().DataDirectory;
             _csvFileName = Path.Combine(_filePath, "data.csv");
 
-             InitDataTable();
+            InitDataTable();
         }
 
         public async Task<List<PrintData>> GetDataAsync()
         {
+            DataTable table;
             if (!File.Exists(_csvFileName))
             {
-                throw new FileNotFoundException();
+                return null;
+            }
+            try
+            {
+                table = CSVLibraryAK.CSVLibraryAK.Import(_csvFileName, true);
+            }
+            catch
+            {
+                throw new IOException($"Fehler beim Zugriff auf {_csvFileName}");
             }
 
-            var table = CSVLibraryAK.CSVLibraryAK.Import(_csvFileName, true);
-            
-            return  await DataTableToList(table);
+            return await DataTableToList(table);
 
 
         }
 
-        public async Task SaveDataAsync(PrintData data)
+        public async Task SaveDataAsync(List<PrintData> data, bool overrideData)
         {
             await LoadData();
+            if (overrideData)
+            {
+                _printData.Clear();
+                while(_dataTable.Rows.Count > 1)
+                {
+                    _dataTable.Rows.RemoveAt(1);
+                }
 
-            _printData.Add(data);
+            }
+            else
+            {
+            }
 
-            if (!Directory.Exists(_csvFileName))
+            _printData.AddRange(data);
+
+            if (!Directory.Exists(_filePath))
             {
                 Directory.CreateDirectory(_filePath);
             }
@@ -59,19 +79,35 @@ namespace Schluesseluebergabe.Services
             CSVLibraryAK.CSVLibraryAK.Export(_csvFileName, _dataTable);
         }
 
-
-        private Task AddToDatatable(PrintData data)
+        public async Task DeleteDataAtAsync(int i)
         {
-            
-            _dataTable.Rows.Add(
-                data.Recipient.Name,
-                data.Recipient.ForeName,
-                data.Recipient.Id,
-                data.Sender.Name,
-                data.Sender.ForeName,
-                data.Key.Id,
-                data.GeoData.City,
-                data.GeoData.Date);
+            await LoadData();
+            if (!Directory.Exists(_csvFileName))
+            {
+                Directory.CreateDirectory(_filePath);
+            }
+
+            _printData.RemoveAt(i);
+            CSVLibraryAK.CSVLibraryAK.Export(_csvFileName, _dataTable);
+
+        }
+
+
+        private Task AddToDatatable(List<PrintData> dataList)
+        {
+            foreach (var data in dataList)
+            {
+                _dataTable.Rows.Add(
+               data.Recipient.Name,
+               data.Recipient.ForeName,
+               data.Recipient.Id,
+               data.Sender.Name,
+               data.Sender.ForeName,
+               data.Key.Id,
+               data.GeoData.City,
+               data.GeoData.Date);
+            }
+
             return Task.CompletedTask;
         }
 
@@ -105,7 +141,7 @@ namespace Schluesseluebergabe.Services
 
         }
 
-        private static async  Task<List<PrintData>> DataTableToList(DataTable table)
+        private static async Task<List<PrintData>> DataTableToList(DataTable table)
         {
             List<PrintData> list = new();
 
@@ -132,11 +168,11 @@ namespace Schluesseluebergabe.Services
                         },
                         GeoData = new GeoData()
                         {
-                            City = items[6]?.ToString()
+                            City = items[6]?.ToString(),
+                            Date = DateTime.Parse(items[7].ToString()[..10])
                         }
                     });
             }
-
             return list;
         }
     }

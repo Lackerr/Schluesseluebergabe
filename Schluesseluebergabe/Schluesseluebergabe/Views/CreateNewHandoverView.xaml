@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:Schluesseluebergabe.Views" xmlns:viewmodels="clr-namespace:Schluesseluebergabe.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CreateNewHandoverViewModel}"
              xmlns:WPF="clr-namespace:TXTextControl.WPF;assembly=TXTextControl.WPF"
              mc:Ignorable="d" 
-             Background="White"
-             Cursor="{Binding Cursor}">
+             Background="White">
     <StackPanel >
         
             <Label Content="Neue Schlüsselübergabe" FontSize="36" Foreground="#2097C8" Padding="10"/>
