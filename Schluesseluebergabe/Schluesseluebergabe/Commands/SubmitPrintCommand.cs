@@ -29,20 +29,6 @@ namespace Schluesseluebergabe.Commands
                 string fileName = await _txPrinter.PrintDocumentAsync(_printData);
 
 
-                PrintDialog dialog = new();
-
-                using (var document = PdfDocument.Load(fileName))
-                {
-                    using var printDocument = document.CreatePrintDocument();
-                    dialog.Document = printDocument;
-                    var result = dialog.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        printDocument.Print();
-                    }
-                }
-
-
 
                 MessageBox.Show("Dokument erfolgreich erstellt", "Finished");
             }
