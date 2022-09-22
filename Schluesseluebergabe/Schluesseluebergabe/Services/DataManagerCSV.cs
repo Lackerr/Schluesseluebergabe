@@ -58,10 +58,11 @@ namespace Schluesseluebergabe.Services
             if (overrideData)
             {
                 _printData.Clear();
-                while(_dataTable.Rows.Count > 1)
-                {
-                    _dataTable.Rows.RemoveAt(1);
-                }
+                _dataTable.Clear();
+                //while(_dataTable.Rows.Count > 1)
+                //{
+                //    _dataTable.Rows.RemoveAt(1);
+                //}
 
             }
             else
