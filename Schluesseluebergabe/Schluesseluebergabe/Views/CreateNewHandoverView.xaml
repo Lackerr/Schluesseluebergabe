@@ -7,18 +7,22 @@
              xmlns:WPF="clr-namespace:TXTextControl.WPF;assembly=TXTextControl.WPF"
              mc:Ignorable="d" 
              Background="White">
-    <StackPanel >
-        
-            <Label Content="Neue Schlüsselübergabe" FontSize="36" Foreground="#2097C8" Padding="10"/>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Neue Schlüsselübergabe" FontSize="36" Foreground="#2097C8" Padding="10"/>
 
 
-        <Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -70,8 +74,11 @@
                 <TextBox Name="TxtKeyId" Text="{Binding Key.Id}" FontSize="20"  BorderThickness="0,0,0,2"  Margin="10,10,100,0" TextChanged="TextBox_TextChanged"/>
                 <Label Content="Schlüsselnummer" FontSize="16" Margin="10,0,10,10"/>
             </StackPanel>
-            <Button Grid.Column="0" Grid.Row="4" Content="Dokument erstellen" Foreground="White" Width="auto" Background="#2097C8" Margin="10,10,100,20" FontSize="20"  Cursor="Hand" IsEnabled="False" Command="{Binding SubmitCommand}" Name="BttnSubmit" />
-            <Button Grid.Column="1" Grid.Row="4" Content="Abbrechen"  Foreground="White" Background="#2097C8" Margin="10,10,100,20" FontSize="20" Cursor="Hand" Command="{Binding CancelCommand}"/>
         </Grid>
-    </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Name="BttnSubmit" Content="Drucken"  Foreground="White" Background="#2097C8" Margin="10,10,10,10" FontSize="20" Cursor="Hand" Command="{Binding SubmitCommand}" HorizontalAlignment="Right" IsEnabled="False"/>
+            <Button Content="Abbrechen"  Foreground="White" Background="#2097C8" Margin="10,10,10,10" FontSize="20" Cursor="Hand" Command="{Binding CancelCommand}" HorizontalAlignment="Right"/>
+
+        </StackPanel>
+    </Grid>
 </UserControl>
